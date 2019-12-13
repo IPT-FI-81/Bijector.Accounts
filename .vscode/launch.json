@@ -1,5 +1,25 @@
 {
     "configurations": [
+    {
+        "name": ".NET Core Launch (web)",
+        "type": "coreclr",
+        "request": "launch",
+        "preLaunchTask": "dotnet-build",        
+        "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/Bijector.Accounts.dll",
+        "args": [],
+        "cwd": "${workspaceFolder}/src",
+        "stopAtEntry": false,
+        "serverReadyAction": {
+            "action": "openExternally",
+            "pattern": "^\\s*Now listening on:\\s+(https?://\\S+)"
+        },
+        "env": {
+            "ASPNETCORE_ENVIRONMENT": "Development"
+        },
+        "sourceFileMap": {
+            "/Views": "${workspaceFolder}/Views"
+        }
+    },
         {
             "name": "Docker .NET Core Launch",
             "type": "docker",

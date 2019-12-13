@@ -1,10 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UserSecretsId>aa9476ad146396c0b2c9142c3f895c9b</UserSecretsId>
   </PropertyGroup>
-
   <ItemGroup>
+    <PackageReference Include="IdentityServer4" Version="3.0.2" />
   </ItemGroup>
-
+  <Choose>
+    <When Condition="$(Configuration)=='Release'">
+      <ItemGroup>
+        <PackageReference Include="Bijector.Infrastructure" Version="[1.0.4-dev,)" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <ProjectReference Include="../../Bijector.Infrastructure/src/Bijector.Infrastructure.csproj" />
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
 </Project>
