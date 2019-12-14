@@ -7,7 +7,7 @@ namespace Bijector.Accounts.Services
     {
         public async Task<bool> IsOriginAllowedAsync(string origin)
         {
-            //because course-work deadline ;)
+            //because course-work deadline ;)            
             return true;
         }
     }

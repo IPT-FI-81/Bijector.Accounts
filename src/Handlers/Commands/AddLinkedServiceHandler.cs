@@ -20,7 +20,8 @@ namespace Bijector.Accounts.Handlers.Commands
         public async Task Handle(AddLinkedService command, IContext context)
         {            
             var service = new Service
-            {                
+            {       
+                UserServiceId = command.UserServiceId,
                 ServiceName = command.ServiceName,
                 ServiceType = command.ServiceType,
                 UserServiceName = command.UserServiceName
