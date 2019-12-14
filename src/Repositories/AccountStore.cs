@@ -23,8 +23,7 @@ namespace Bijector.Accounts.Repositories
         {   
             if(await IsExistsAsync(id))
             {
-                var account = await accountRepository.GetByIdAsync(id);
-                service.UserServiceId = Guid.NewGuid();                
+                var account = await accountRepository.GetByIdAsync(id);                
                 account.LinkedService.Add(service);
                 await accountRepository.UpdateAsync(id, account);
                 return true;
