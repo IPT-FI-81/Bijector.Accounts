@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Bijector.Accounts.Models;
 using Bijector.Infrastructure.Repositories;
@@ -24,7 +24,7 @@ namespace Bijector.Accounts.Repositories
             if(await IsExistsAsync(id))
             {
                 var account = await accountRepository.GetByIdAsync(id);
-                service.UserServiceId = Guid.NewGuid();
+                service.UserServiceId = Guid.NewGuid();                
                 account.LinkedService.Add(service);
                 await accountRepository.UpdateAsync(id, account);
                 return true;
@@ -58,6 +58,7 @@ namespace Bijector.Accounts.Repositories
                     Login = login
                 };
                 account.PasswordHash = passwordHasher.HashPassword(account, password);
+                account.LinkedService = new List<Service>();
                 await accountRepository.AddAsync(account);
                 return true;
             }
@@ -101,6 +102,7 @@ namespace Bijector.Accounts.Repositories
                 var account = await accountRepository.GetByIdAsync(id);
                 account.LinkedService.Remove(service);
                 await accountRepository.UpdateAsync(id, account);
+                return true;
             }
             return false;
         }
