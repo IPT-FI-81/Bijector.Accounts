@@ -38,6 +38,7 @@ namespace Bijector.Accounts
 
             services.AddIdentityServer(options =>
             {
+                options.IssuerUri = Configuration.GetSection("ConsulOptions:ServiceAddress").Get<string>();
                 options.UserInteraction.LoginUrl = "/Accounts/LoginView";                
             }).
                 AddDeveloperSigningCredential().
@@ -69,7 +70,7 @@ namespace Bijector.Accounts
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseConsul(lifetime);            
 

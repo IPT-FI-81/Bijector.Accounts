@@ -80,7 +80,7 @@ namespace Bijector.Accounts.Controllers
             return View();
         }
 
-        [HttpPost("Login")] 
+        [HttpGet("Login")] 
         [AllowAnonymous]       
         public async Task<IActionResult> Login(LoginRequest loginQuery)
         {
