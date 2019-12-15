@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -19,12 +20,12 @@ namespace Bijector.Accounts.Services
         }
 
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
-        {
-            var id = Guid.Parse(context.Subject.GetSubjectId());
-            if (context.RequestedClaimTypes.Any() && await accountStore.IsExistsAsync(id))
+        {            
+            var login = context.Subject.Identity.Name;            
+            if (await accountStore.IsExistsAsync(login))
             {
-                var account = await accountStore.GetAsync(context.Subject.GetSubjectId());
-                //context.AddRequestedClaims(new Claim("sub", context.Subject.GetSubjectId()));
+                var account = await accountStore.GetAsync(login);
+                //context.IssuedClaims = new List<Claim>{new Claim("iden", account.Id.ToString())};
             }
         }
 

@@ -6,7 +6,7 @@ namespace Bijector.Accounts.Models
 {
     public class Account : IIdentifiable
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         public string Login { get; set; }
 

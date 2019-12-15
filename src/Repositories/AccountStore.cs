@@ -19,7 +19,7 @@ namespace Bijector.Accounts.Repositories
             this.passwordHasher = passwordHasher;
         }
 
-        public async Task<bool> AddLinkedServiceAsync(Guid id, Service service)
+        public async Task<bool> AddLinkedServiceAsync(int id, Service service)
         {   
             if(await IsExistsAsync(id))
             {
@@ -31,7 +31,7 @@ namespace Bijector.Accounts.Repositories
             return false;         
         }
 
-        public async Task<bool> ChangePasswordAsync(Guid id, string oldPassword, string newPassword)
+        public async Task<bool> ChangePasswordAsync(int id, string oldPassword, string newPassword)
         {
             if(await IsExistsAsync(id))
             {
@@ -64,7 +64,7 @@ namespace Bijector.Accounts.Repositories
             return false;
         }
 
-        public async Task<bool> DeleteAsync(Guid id)
+        public async Task<bool> DeleteAsync(int id)
         {
             if(await IsExistsAsync(id))
             {                
@@ -79,7 +79,7 @@ namespace Bijector.Accounts.Repositories
             return await accountRepository.FindAsync(acc => acc.Login == login);
         }
 
-        public async Task<Account> GetAsync(Guid id)
+        public async Task<Account> GetAsync(int id)
         {
             return await accountRepository.GetByIdAsync(id);
         }
@@ -89,12 +89,12 @@ namespace Bijector.Accounts.Repositories
             return await accountRepository.IsExistsAsync(acc => acc.Login == login);
         }
 
-        public async Task<bool> IsExistsAsync(Guid id)
+        public async Task<bool> IsExistsAsync(int id)
         {
             return await accountRepository.IsExistsAsync(id);
         }
 
-        public async Task<bool> RemoveLinkedServiceAsync(Guid id, Service service)
+        public async Task<bool> RemoveLinkedServiceAsync(int id, Service service)
         {
             if(await accountRepository.IsExistsAsync(id))
             {
@@ -106,7 +106,7 @@ namespace Bijector.Accounts.Repositories
             return false;
         }
 
-        public async Task<bool> UpdateAsync(Guid id, Account newAccountData)
+        public async Task<bool> UpdateAsync(int id, Account newAccountData)
         {
             if(await IsExistsAsync(id))
             {

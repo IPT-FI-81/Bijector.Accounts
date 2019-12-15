@@ -4,7 +4,7 @@ namespace Bijector.Accounts.Models
 {
     public class Service
     {
-        public Guid UserServiceId { get; set; }
+        public int UserServiceId { get; set; }
 
         public string ServiceName { get; set; }
 

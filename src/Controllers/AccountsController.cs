@@ -12,6 +12,7 @@ using Bijector.Infrastructure.Dispatchers;
 using Bijector.Accounts.Messages.Queries;
 using Bijector.Accounts.Repositories;
 using Bijector.Accounts.Messages.Commands;
+using System.Security.Claims;
 
 namespace Bijector.Accounts.Controllers
 {
@@ -112,8 +113,8 @@ namespace Bijector.Accounts.Controllers
         [HttpGet("LinkedServices")]
         public async Task<IActionResult> GetLinkedServices()
         {
-            var id = Guid.Parse(HttpContext.User.Claims.First(cl => cl.Type == "sub").Value);
-            var account =await accountStore.GetAsync(id);
+            var id = int.Parse(HttpContext.User.Claims.First(cl => cl.Type == "sub").Value);
+            var account = await accountStore.GetAsync(id);
             return new JsonResult(account.LinkedService);
         }
 
@@ -121,8 +122,8 @@ namespace Bijector.Accounts.Controllers
         [HttpPut("AddLinkedServices")]
         public async Task<IActionResult> AddLinkedServices(AddLinkedService command)
         {
-            var id = Guid.Parse(HttpContext.User.Claims.First(cl => cl.Type == "sub").Value);
-            var context = new BaseContext(Guid.Empty, id, null, null);
+            var id = int.Parse(HttpContext.User.Claims.First(cl => cl.Type == "sub").Value);
+            var context = new BaseContext(0, id, null, null);
             await commandDispatcher.SendAsync(command, context);
             return Accepted();
         }

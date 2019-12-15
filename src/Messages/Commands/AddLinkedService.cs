@@ -5,7 +5,7 @@ namespace Bijector.Accounts.Messages.Commands
 {
     public class AddLinkedService : ICommand
     {
-        public Guid UserServiceId { get; set; }
+        public int UserServiceId { get; set; }
 
         public string ServiceName { get; set; }
 
