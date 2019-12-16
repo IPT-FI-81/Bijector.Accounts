@@ -6,11 +6,12 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="IdentityServer4" Version="3.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.0.0-rc4" />
   </ItemGroup>
   <Choose>
     <When Condition="$(Configuration)=='Release'">
       <ItemGroup>
-        <PackageReference Include="Bijector.Infrastructure" Version="[1.0.8-dev,)" />
+        <PackageReference Include="Bijector.Infrastructure" Version="[1.0.10-dev,)" />
       </ItemGroup>
     </When>
     <Otherwise>

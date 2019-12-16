@@ -16,6 +16,10 @@ using Bijector.Accounts.Messages.Queries;
 using Bijector.Accounts.Messages.Commands;
 using Bijector.Accounts.Handlers.Queries;
 using Bijector.Accounts.Handlers.Commands;
+using Microsoft.OpenApi.Models;
+using Bijector.Infrastructure.Queues;
+using Bijector.Accounts.Messages.Events;
+using Bijector.Accounts.Handlers.Events;
 
 namespace Bijector.Accounts
 {
@@ -33,6 +37,8 @@ namespace Bijector.Accounts
             services.AddConsul(Configuration);
 
             services.AddMongoDb(Configuration);
+
+            services.AddRabbitMQ(Configuration);
 
             services.AddMongoDbRepository<Account>();
 
@@ -58,9 +64,15 @@ namespace Bijector.Accounts
             services.AddHandleDispatchers();
             services.AddTransient<IQueryHandler<RegisterRequest, Account>, RegisterRequestHandler>();
             services.AddTransient<ICommandHandler<AddLinkedService>,AddLinkedServiceHandler>();
+            services.AddTransient<IEventHandler<AddService>, AddServiceHandler>();
 
             services.AddControllersWithViews();
             //services.AddControllers();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Bijector Accounts API", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
@@ -70,9 +82,11 @@ namespace Bijector.Accounts
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseConsul(lifetime);            
+
+            app.UseRabbitMQ().SubscribeEvent<AddService>();
 
             app.UseRouting();
 
@@ -85,6 +99,13 @@ namespace Bijector.Accounts
             app.UseIdentityServer();
 
             app.UseCookiePolicy();
+
+            app.UseSwagger();
+            
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Bijector Accounts API");
+            });
 
             app.UseEndpoints(endpoints =>
             {
